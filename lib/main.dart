@@ -3,6 +3,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/route_manager.dart';
 import 'package:mechanic_admin/auth/auth_screen.dart';
+import 'package:mechanic_admin/chat/chat_room.dart';
 import 'package:mechanic_admin/firebase_options.dart';
 import 'package:mechanic_admin/helpers/constants.dart';
 import 'package:mechanic_admin/helpers/loading_screen.dart';
@@ -53,6 +54,9 @@ class MyApp extends StatelessWidget {
                 return const AuthScreen();
               }
             }),
+        routes: {
+          ChatRoom.routeName: (context) => ChatRoom(),
+        },
       ),
     );
   }

@@ -1,17 +1,14 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/route_manager.dart';
 
 import 'package:mechanic_admin/helpers/constants.dart';
-import 'package:mechanic_admin/helpers/invoice/invoice_page.dart';
+import 'package:mechanic_admin/manage_bookings/manage_bookings_screen.dart';
 import 'package:mechanic_admin/mechanic/add_service.dart';
 import 'package:mechanic_admin/mechanic/admin_mechanic_profile.dart';
-import 'package:mechanic_admin/mechanic/manage_bookings/manage_bookings_screen.dart';
+
 import 'package:mechanic_admin/providers/auth_provider.dart';
-import 'package:mechanic_admin/providers/invoice_provider.dart';
-import 'package:mechanic_admin/widgets/my_popup.dart';
 import 'package:provider/provider.dart';
 
 class DashboardTop extends StatelessWidget {
@@ -35,26 +32,12 @@ class DashboardTop extends StatelessWidget {
                   const SizedBox(
                     width: 5,
                   ),
-                  IconButton(
-                    icon: const Icon(
-                      Icons.arrow_back_ios_outlined,
-                      color: Colors.white,
-                    ),
-                    onPressed: () {
-                      Navigator.of(context).pop();
-                    },
-                  ),
-                  const SizedBox(
-                    width: 20,
-                  ),
-                  const Text(
-                    'Your Dashboard',
-                    style: TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.w900,
-                      color: Colors.white,
-                    ),
-                  ),
+                  const Text('Mechanic Dashboard',
+                      style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white)),
+
                   const Spacer(),
                   // GestureDetector(
                   //   onTap: () {
@@ -95,11 +78,11 @@ class DashboardTop extends StatelessWidget {
                         isDashboard: true,
                       )),
                 ),
-                const DashboardTopOption(
+                DashboardTopOption(
                   color: Colors.blue,
                   icon: Icons.event_seat_outlined,
                   title: 'Manage\nBookings',
-                  routeName: ManageBookingsScreen.routeName,
+                  onTap: () => Get.to(() => const ManageBookingsScreen()),
                 ),
                 DashboardTopOption(
                   color: Colors.orange,
@@ -109,7 +92,6 @@ class DashboardTop extends StatelessWidget {
                     // final pdfFile = await PdfInvoiceApi.generate(invoice);
 
                     // PdfApi.openFile(pdfFile);
-                    showMyPopup(context);
                   },
                 ),
                 // DashboardTopOption(

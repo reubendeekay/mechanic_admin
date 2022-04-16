@@ -40,7 +40,8 @@ class UserModel {
       fullName: json['fullName'],
       password: json['password'],
       phoneNumber: json['phoneNumber'],
-      imageUrl: json['pro'],
+      imageUrl: json['imageUrl'],
+      userId: json['userId'],
     );
   }
 }

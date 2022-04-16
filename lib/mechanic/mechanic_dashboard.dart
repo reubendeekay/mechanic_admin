@@ -4,6 +4,7 @@ import 'package:mechanic_admin/helpers/cached_image.dart';
 import 'package:mechanic_admin/helpers/constants.dart';
 import 'package:mechanic_admin/mechanic/dashboard_top.dart';
 import 'package:mechanic_admin/mechanic/mechanic_register/widgets/mechanic_service_tile.dart';
+
 import 'package:mechanic_admin/models/mechanic_model.dart';
 import 'package:mechanic_admin/providers/auth_provider.dart';
 import 'package:mechanic_admin/widgets/my_popup.dart';
@@ -25,10 +26,6 @@ class _MechanicDasboardState extends State<MechanicDasboard> {
     Future.delayed(Duration.zero, () async {
       await Provider.of<AuthProvider>(context, listen: false)
           .getCurrentUser(uid);
-
-      Future.delayed(const Duration(seconds: 2), () async {
-        showMyPopup(context);
-      });
     });
   }
 

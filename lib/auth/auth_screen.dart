@@ -6,6 +6,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/route_manager.dart';
 import 'package:mechanic_admin/helpers/constants.dart';
 import 'package:mechanic_admin/helpers/loading_screen.dart';
+import 'package:mechanic_admin/mechanic/mechanic_register_screen.dart';
 import 'package:mechanic_admin/providers/auth_provider.dart';
 import 'package:provider/provider.dart';
 
@@ -243,8 +244,7 @@ class _AuthScreenState extends State<AuthScreen> with TickerProviderStateMixin {
                             2,
                             () {
                               HapticFeedback.lightImpact();
-                              Fluttertoast.showToast(
-                                  msg: 'Create a new account button pressed');
+                              Get.to(() => const MechanicRegisterScreen());
                             },
                           ),
                           SizedBox(height: size.height * .05),

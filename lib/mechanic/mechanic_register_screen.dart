@@ -12,6 +12,7 @@ import 'package:mechanic_admin/mechanic/add_service.dart';
 import 'package:mechanic_admin/mechanic/mechanic_dashboard.dart';
 import 'package:mechanic_admin/mechanic/mechanic_register/add_on_map.dart';
 import 'package:mechanic_admin/mechanic/mechanic_register/widgets/time_picker.dart';
+
 import 'package:mechanic_admin/models/mechanic_model.dart';
 import 'package:mechanic_admin/models/service_model.dart';
 import 'package:mechanic_admin/providers/admin_user_provider.dart';
@@ -22,17 +23,15 @@ import 'package:media_picker_widget/media_picker_widget.dart';
 import 'package:progressive_time_picker/progressive_time_picker.dart';
 import 'package:provider/provider.dart';
 
-class mechanic_adminRegisterScreen extends StatefulWidget {
-  const mechanic_adminRegisterScreen({Key? key}) : super(key: key);
+class MechanicRegisterScreen extends StatefulWidget {
+  const MechanicRegisterScreen({Key? key}) : super(key: key);
   static const routeName = 'mechanic_admin-register-screen';
 
   @override
-  State<mechanic_adminRegisterScreen> createState() =>
-      _mechanic_adminRegisterScreenState();
+  State<MechanicRegisterScreen> createState() => _MechanicRegisterScreenState();
 }
 
-class _mechanic_adminRegisterScreenState
-    extends State<mechanic_adminRegisterScreen> {
+class _MechanicRegisterScreenState extends State<MechanicRegisterScreen> {
   List<Media> mediaList = [];
   File? coverFile;
   List<File> imageFiles = [];

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/route_manager.dart';
 import 'package:lottie/lottie.dart';
+import 'package:mechanic_admin/drawer/hidden_drawer.dart';
 import 'package:mechanic_admin/home/homepage.dart';
 
 import 'package:mechanic_admin/main.dart';
@@ -41,7 +42,7 @@ class _InitialLoadingScreenState extends State<InitialLoadingScreen> {
           .getCurrentLocation()
           .then((_) =>
               //TO DO: Navigate to HomePage
-              Get.off(() => const MechanicDasboard()));
+              Get.off(() => HidenDrawer()));
     });
   }
 

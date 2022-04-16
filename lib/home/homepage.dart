@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:marker_icon/marker_icon.dart';
 import 'package:mechanic_admin/helpers/constants.dart';
@@ -5,10 +6,13 @@ import 'package:mechanic_admin/helpers/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:mechanic_admin/helpers/loading_screen.dart';
+import 'package:mechanic_admin/home/general_map.dart';
+import 'package:mechanic_admin/models/request_model.dart';
 import 'package:mechanic_admin/providers/auth_provider.dart';
 import 'package:mechanic_admin/providers/chat_provider.dart';
 import 'package:mechanic_admin/providers/location_provider.dart';
 import 'package:mechanic_admin/providers/mechanic_provider.dart';
+import 'package:mechanic_admin/widgets/my_popup.dart';
 
 import 'package:provider/provider.dart';
 
@@ -51,55 +55,70 @@ class _HomepageState extends State<Homepage> {
       key: _key,
       // drawer: const SideDrawer(),
       body: SafeArea(
-        child: Stack(
-          children: [
-            // MyMarker(globalKey),
-            _locationData == null
-                ? const LoadingScreen()
-                : GoogleMap(
-                    markers: _markers,
-                    onMapCreated: _onMapCreated,
-                    mapType: MapType.normal,
-                    myLocationButtonEnabled: true,
-                    zoomControlsEnabled: true,
-                    myLocationEnabled: true,
-                    initialCameraPosition: CameraPosition(
-                        target: LatLng(
-                            _locationData.latitude!, _locationData.longitude!),
-                        zoom: 15),
-                  ),
+        child: StreamBuilder<QuerySnapshot>(
+            stream: FirebaseFirestore.instance
+                .collection('requests/mechanics/$uid')
+                .where('status', isEqualTo: 'pending')
+                .snapshots(),
+            builder: (context, snapshot) {
+              // if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
 
-            Positioned(
-              left: 0,
-              right: 0,
-              top: 0,
-              child: Row(
+              return Stack(
                 children: [
-                  Container(
-                    color: Colors.white,
-                    margin: const EdgeInsets.all(5.0),
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: InkWell(
-                          onTap: widget.opendrawer,
-                          child: const Icon(
-                            Icons.menu,
-                            color: Colors.grey,
-                            size: 25,
-                          )),
+                  // MyMarker(globalKey),
+                  _locationData == null
+                      ? const LoadingScreen()
+                      : GoogleMap(
+                          markers: _markers,
+                          onMapCreated: _onMapCreated,
+                          mapType: MapType.normal,
+                          myLocationButtonEnabled: true,
+                          zoomControlsEnabled: true,
+                          myLocationEnabled: true,
+                          initialCameraPosition: CameraPosition(
+                              target: LatLng(_locationData.latitude!,
+                                  _locationData.longitude!),
+                              zoom: 15),
+                        ),
+
+                  Positioned(
+                    left: 0,
+                    right: 0,
+                    top: 0,
+                    child: Row(
+                      children: [
+                        Container(
+                          color: Colors.white,
+                          margin: const EdgeInsets.all(5.0),
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: InkWell(
+                                onTap: widget.opendrawer,
+                                child: const Icon(
+                                  Icons.menu,
+                                  color: Colors.grey,
+                                  size: 25,
+                                )),
+                          ),
+                        ),
+                      ],
                     ),
                   ),
+
+                  if (snapshot.hasData && snapshot.data!.docs.isNotEmpty)
+                    MyPopDialog(
+                      request: RequestModel.fromJson(snapshot.data!.docs.first),
+                    ),
                 ],
-              ),
-            ),
-            // const Positioned(
-            //   bottom: 15,
-            //   left: 0,
-            //   right: 0,
-            //   child: BottomMapWidget(),
-            // )
-          ],
-        ),
+              );
+              // }
+
+              // List<DocumentSnapshot> docs = snapshot.data!.docs;
+
+              // return GeneralMapScreen(
+              //   request: RequestModel.fromJson(docs.first),
+              // );
+            }),
       ),
     );
   }
