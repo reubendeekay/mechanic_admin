@@ -4,6 +4,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/route_manager.dart';
 
 import 'package:google_fonts/google_fonts.dart';
+import 'package:mechanic_admin/auth/auth_screen.dart';
 import 'package:mechanic_admin/chat/chat_screen.dart';
 import 'package:mechanic_admin/drawer/drawer_avatar.dart';
 import 'package:mechanic_admin/drawer/drawer_chart.dart';
@@ -70,6 +71,7 @@ class DrawerItems {
       icon: Icons.logout_outlined,
       onTap: () async {
         await FirebaseAuth.instance.signOut();
+        Get.offAll(() => const AuthScreen());
       });
 
   static final List<DrawerItem> all = [
@@ -96,7 +98,6 @@ class _DrawerWidgetState extends State<DrawerWidget>
   final double runanim = 0.4;
   @override
   Widget build(BuildContext context) {
-    var we = MediaQuery.of(context).size.width;
     var he = MediaQuery.of(context).size.height;
 
     return Column(
@@ -112,7 +113,7 @@ class _DrawerWidgetState extends State<DrawerWidget>
         ),
         Expanded(child: buildDrawerItem(context)),
         Row(
-          children: [
+          children: const [
             BottomLogo(),
           ],
         ),
@@ -124,7 +125,6 @@ class _DrawerWidgetState extends State<DrawerWidget>
   }
 
   Widget buildDrawerItem(BuildContext context) {
-    final user = Provider.of<AuthProvider>(context, listen: false).user;
     return Padding(
       padding: const EdgeInsets.all(20.0),
       child: ListView(padding: const EdgeInsets.all(0.0), children: [

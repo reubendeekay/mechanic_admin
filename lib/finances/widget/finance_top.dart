@@ -18,7 +18,7 @@ class FinanceTop extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
-    final user = Provider.of<AuthProvider>(context).user;
+    final balance = Provider.of<AuthProvider>(context).mechanic!.analytics;
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 15),
       child: Container(
@@ -39,14 +39,14 @@ class FinanceTop extends StatelessWidget {
 
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
-                children: const [
-                  Text(
+                children: [
+                  const Text(
                     'Account Balance',
                     style: TextStyle(color: Colors.white, fontSize: 12),
                   ),
                   Text(
-                    'KES 100',
-                    style: TextStyle(
+                    'KES ' + balance!.balance!.toString(),
+                    style: const TextStyle(
                         color: Colors.white,
                         fontSize: 16,
                         fontWeight: FontWeight.bold),

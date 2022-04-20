@@ -30,7 +30,7 @@ class _FinanceOverviewScreenState extends State<FinanceOverviewScreen> {
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
-    final user = Provider.of<AuthProvider>(context).user;
+    final mechanic = Provider.of<AuthProvider>(context).mechanic!.analytics;
 
     return Scaffold(
       body: Column(
@@ -57,13 +57,13 @@ class _FinanceOverviewScreenState extends State<FinanceOverviewScreen> {
               Expanded(
                 child: buildDetails(
                   title: 'Total Requests',
-                  value: '23',
+                  value: mechanic!.requests!.toString(),
                 ),
               ),
               Expanded(
                 child: buildDetails(
                   title: 'Total Income',
-                  value: 'KES 29,0000',
+                  value: 'KES ' + mechanic.totalEarnings!.toString(),
                 ),
               ),
               const SizedBox(width: 15),
@@ -74,13 +74,13 @@ class _FinanceOverviewScreenState extends State<FinanceOverviewScreen> {
               Expanded(
                 child: buildDetails(
                   title: 'Ratings Earned',
-                  value: '4.5',
+                  value: mechanic.rating!.toStringAsFixed(1),
                 ),
               ),
               Expanded(
                 child: buildDetails(
                   title: 'Pending requests',
-                  value: '2',
+                  value: mechanic.pendingRequests!.toString(),
                 ),
               ),
               const SizedBox(width: 15),

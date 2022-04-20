@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/route_manager.dart';
 import 'package:lottie/lottie.dart';
 import 'package:mechanic_admin/drawer/hidden_drawer.dart';
@@ -6,6 +7,7 @@ import 'package:mechanic_admin/home/homepage.dart';
 
 import 'package:mechanic_admin/main.dart';
 import 'package:mechanic_admin/mechanic/mechanic_dashboard.dart';
+import 'package:mechanic_admin/mechanic/mechanic_register_screen.dart';
 import 'package:mechanic_admin/providers/auth_provider.dart';
 import 'package:mechanic_admin/providers/location_provider.dart';
 import 'package:provider/provider.dart';
@@ -38,11 +40,22 @@ class _InitialLoadingScreenState extends State<InitialLoadingScreen> {
     Future.delayed(Duration.zero, () async {
       await Provider.of<AuthProvider>(context, listen: false)
           .getCurrentUser(uid);
+      final user = Provider.of<AuthProvider>(context, listen: false).user;
+
       await Provider.of<LocationProvider>(context, listen: false)
           .getCurrentLocation()
-          .then((_) =>
-              //TO DO: Navigate to HomePage
-              Get.off(() => HidenDrawer()));
+          .then((_) async {
+        //TO DO: Navigate to HomePage
+        if (user!.isMechanic!) {
+          Get.off(() => HidenDrawer());
+        } else {
+          await Fluttertoast.showToast(
+              msg:
+                  'You are not a mechanic. Register as a mechanic to continue.');
+
+          Get.to(() => const MechanicRegisterScreen());
+        }
+      });
     });
   }
 

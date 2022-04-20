@@ -1,8 +1,11 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:google_map_polyline_new/google_map_polyline_new.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:location/location.dart';
 import 'package:marker_icon/marker_icon.dart';
 import 'package:mechanic_admin/helpers/constants.dart';
+import 'package:mechanic_admin/models/mechanic_model.dart';
 import 'package:mechanic_admin/models/request_model.dart';
 import 'package:mechanic_admin/providers/location_provider.dart';
 import 'package:provider/provider.dart';
@@ -65,7 +68,7 @@ class _TrailMapScreenState extends State<TrailMapScreen> {
         icon: await MarkerIcon.downloadResizePictureCircle(
             widget.request.user!.imageUrl!,
             borderSize: 10,
-            size: 130,
+            size: 100,
             addBorder: true,
             borderColor: kPrimaryColor),
         position: LatLng(widget.request.userLocation!.latitude,
@@ -78,11 +81,11 @@ class _TrailMapScreenState extends State<TrailMapScreen> {
         icon: await MarkerIcon.downloadResizePictureCircle(
             widget.request.user!.imageUrl!,
             borderSize: 10,
-            size: 100,
+            size: 80,
             addBorder: true,
             borderColor: kPrimaryColor),
         position: LatLng(loc!.latitude!, loc.longitude!),
-        infoWindow: InfoWindow(title: 'You'),
+        infoWindow: const InfoWindow(title: 'You'),
       ),
     ]);
 
@@ -99,6 +102,24 @@ class _TrailMapScreenState extends State<TrailMapScreen> {
   Widget build(BuildContext context) {
     final loc =
         Provider.of<LocationProvider>(context, listen: false).locationData;
+
+    Location.instance.onLocationChanged.listen((data) async {
+      mapController.animateCamera(CameraUpdate.newCameraPosition(
+        CameraPosition(
+          target: LatLng(data.latitude!, data.longitude!),
+          zoom: 15.0,
+        ),
+      ));
+
+      MechanicModel mechanic = widget.request.mechanic!;
+      mechanic.location != GeoPoint(data.latitude!, data.longitude!);
+      FirebaseFirestore.instance
+          .collection('userData')
+          .doc('bookings')
+          .collection(widget.request.user!.userId!)
+          .doc(widget.request.id)
+          .update({'mechanic': mechanic.toJson()});
+    });
 
     return GoogleMap(
       // myLocationEnabled: true,

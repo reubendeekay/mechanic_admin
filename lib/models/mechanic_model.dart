@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:mechanic_admin/models/analytics_model.dart';
 
 class MechanicModel {
   final String? name;
@@ -13,6 +14,7 @@ class MechanicModel {
   final String? openingTime;
   final String? closingTime;
   final String? address;
+  final AnalyticsModel? analytics;
   List<dynamic>? services = [];
   //FIREBASE CLASS FOR LONGITUDE AND LATITUDE
   final GeoPoint? location;
@@ -27,6 +29,7 @@ class MechanicModel {
     this.fileImages,
     this.profileFile,
     this.closingTime,
+    this.analytics,
     this.address,
     this.location,
     this.id,
@@ -50,7 +53,7 @@ class MechanicModel {
     };
   }
 
-  factory MechanicModel.fromJson(Map<String, dynamic> json) {
+  factory MechanicModel.fromJson(DocumentSnapshot json) {
     return MechanicModel(
       address: json['address'],
       name: json['name'],

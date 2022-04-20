@@ -1,9 +1,11 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'dart:async';
 import 'dart:ui';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/route_manager.dart';
+import 'package:mechanic_admin/auth/reset_password_screen.dart';
 import 'package:mechanic_admin/helpers/constants.dart';
 import 'package:mechanic_admin/helpers/loading_screen.dart';
 import 'package:mechanic_admin/mechanic/mechanic_register_screen.dart';
@@ -159,7 +161,8 @@ class _AuthScreenState extends State<AuthScreen> with TickerProviderStateMixin {
                       child: Padding(
                         padding: EdgeInsets.only(top: size.height * .1),
                         child: Text(
-                          'AutoConnect Mechanic ',
+                          'AutoConnect\n Mechanic ',
+                          textAlign: TextAlign.center,
                           style: TextStyle(
                             color: Colors.white.withOpacity(.7),
                             fontSize: 24,
@@ -205,8 +208,8 @@ class _AuthScreenState extends State<AuthScreen> with TickerProviderStateMixin {
                                     await Provider.of<AuthProvider>(context,
                                             listen: false)
                                         .login(
-                                      email: email,
-                                      password: password,
+                                      email: email!.trim(),
+                                      password: password!.trim(),
                                     );
                                     setState(() {
                                       isLoading = false;
@@ -225,8 +228,7 @@ class _AuthScreenState extends State<AuthScreen> with TickerProviderStateMixin {
                                 2.58,
                                 () {
                                   HapticFeedback.lightImpact();
-                                  Fluttertoast.showToast(
-                                      msg: 'Forgotten password button pressed');
+                                  Get.to(() => const ResetPasswordScreen());
                                 },
                               ),
                             ],
@@ -234,23 +236,7 @@ class _AuthScreenState extends State<AuthScreen> with TickerProviderStateMixin {
                         ],
                       ),
                     ),
-                    Expanded(
-                      flex: 6,
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        children: [
-                          component2(
-                            'Register as Mechanic',
-                            2,
-                            () {
-                              HapticFeedback.lightImpact();
-                              Get.to(() => const MechanicRegisterScreen());
-                            },
-                          ),
-                          SizedBox(height: size.height * .05),
-                        ],
-                      ),
-                    ),
+                    Expanded(flex: 6, child: Container()),
                   ],
                 ),
               ],

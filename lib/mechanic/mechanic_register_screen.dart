@@ -338,7 +338,9 @@ class _MechanicRegisterScreenState extends State<MechanicRegisterScreen> {
                         closingTime == null ||
                         address == null ||
                         loc.latitude == null ||
-                        loc.longitude == null
+                        loc.longitude == null ||
+                        imageFiles.isEmpty ||
+                        coverFile == null
                     ? null
                     : () async {
                         setState(() {

@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
+import 'package:mechanic_admin/models/analytics_model.dart';
 
 import 'package:mechanic_admin/models/mechanic_model.dart';
 import 'package:mechanic_admin/models/service_model.dart';
@@ -163,6 +164,12 @@ class AuthProvider with ChangeNotifier {
         .collection('mechanics')
         .doc(userId)
         .get();
+    final analytics = await FirebaseFirestore.instance
+        .collection('mechanics')
+        .doc(userId)
+        .collection('account')
+        .doc('analytics')
+        .get();
 
     _mechanic = MechanicModel(
       id: results.id,
@@ -171,6 +178,8 @@ class AuthProvider with ChangeNotifier {
       openingTime: results['openingTime'],
       services:
           results['services'].map((e) => ServiceModel.fromJson(e)).toList(),
+      name: results['name'],
+      analytics: AnalyticsModel.fromJson(analytics),
       profile: results['profile'],
       description: results['description'],
       images: results['images'],

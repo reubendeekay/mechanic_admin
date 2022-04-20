@@ -38,6 +38,7 @@ class AdminUserProvider with ChangeNotifier {
     });
 
 //UPLOADING mechanic Data TO FIREBASE DATABASE
+
     await FirebaseFirestore.instance.collection('mechanics').doc(uid).set({
       'name': mech.name,
       'phone': mech.phone,
@@ -58,6 +59,21 @@ class AdminUserProvider with ChangeNotifier {
                     'imageUrl': serviceUrls[i],
                     'id': UniqueKey().toString(),
                   }),
+    });
+
+    await FirebaseFirestore.instance
+        .collection('mechanics')
+        .doc(uid)
+        .collection('account')
+        .doc('analytics')
+        .set({
+      'requests': 0,
+      'rating': 0,
+      'ratingCount': 0,
+      'pendingRequests': 0,
+      'completedRequests': 0,
+      'balance': 0,
+      'totalEarnings': 0,
     });
     await FirebaseFirestore.instance.collection('users').doc(uid).update({
       'isMechanic': true,

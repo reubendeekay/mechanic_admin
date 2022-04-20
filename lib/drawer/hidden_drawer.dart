@@ -7,7 +7,7 @@ import 'package:mechanic_admin/providers/auth_provider.dart';
 import 'package:provider/provider.dart';
 
 class HidenDrawer extends StatefulWidget {
-  HidenDrawer({Key? key}) : super(key: key);
+  const HidenDrawer({Key? key}) : super(key: key);
 
   @override
   State<HidenDrawer> createState() => _HidenDrawerState();

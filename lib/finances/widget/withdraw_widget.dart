@@ -1,11 +1,7 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
-import 'package:lottie/lottie.dart';
 import 'package:mechanic_admin/helpers/constants.dart';
 import 'package:mechanic_admin/helpers/my_loader.dart';
-import 'package:mechanic_admin/providers/auth_provider.dart';
-import 'package:provider/provider.dart';
 
 class WithdrawWidget extends StatefulWidget {
   const WithdrawWidget({
@@ -26,7 +22,6 @@ class _WithdrawWidgetState extends State<WithdrawWidget> {
 
   @override
   Widget build(BuildContext context) {
-    final user = Provider.of<AuthProvider>(context, listen: false).user;
     return GestureDetector(
       behavior: HitTestBehavior.opaque,
       onTap: () => Navigator.of(context).pop(),
